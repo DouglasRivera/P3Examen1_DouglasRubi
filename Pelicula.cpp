@@ -1,72 +1,47 @@
-#include<iostream>
-#include<vector>
-#include<string>
-#include<algorithm>
-#include <cstdlib>
-#include <ctime>
+#include "Pelicula.h"
 
-using namespace std;
-
-
-bool Comparacion(Pelicula peli1, Pelicula peli2) {
-  if (peli1.getValoracion() < peli2.getValoracion()) {
-    return false;
-  } else {
-     return true;
-  }
+Pelicula::Pelicula(){
 }
 
-Pelicula::Pelicula(string _titulo, string _director, string _genero, int _valoracion){
-	titulo = _titulo;
-	director = _director;
-	genero = _genero;
-	valoracion = _valoracion;
+Pelicula::~Pelicula(){
 }
 
-void Pelicula::setTitulo(string _titulo){
-	titulo = _titulo;
-}
-
-string Pelicula::getTitulo(){
-	return titulo;
-}
-
-void Pelicula::setDirector(string _director){
-	director = _director;
-}
-
-string Pelicula::getDirector(){
-	return director;
-}
-
-void Pelicula::setGenero(string _genero){
-	genero = _genero;
+Pelicula::Pelicula(string titulo, string genero,int valoracion,string director){
+	this->titulo=titulo;
+	this->genero=genero;
+	this->valoracion=valoracion;
+	this->director=director;
 }
 
 string Pelicula::getGenero(){
-	return genero;
+	return this->genero;
 }
 
-void Pelicula::setValoracion(int _val){
-	valoracion = _val;
+string Pelicula::getTitulo(){
+	return this->titulo;
 }
 
 int Pelicula::getValoracion(){
-	return valoracion;
+	return this->valoracion;
 }
 
-
-int main()
-{
-	vector<Pelicula> pelis; 
-	
-	HTHPlus hthPlus(pelis);
-	// random
-	int valoracion = rand()%(5-1 + 1) + 1;
-	Pelicula peli("Prueba","Autor","Genero",valoracion);
-	hthPlus.agregarPelicula(peli);
-	
-	hthPlus.imprimir();
-	system("pause");
-	return 0;
+string Pelicula::getDirector(){
+	return this->director;
 }
+
+void Pelicula::setTitulo(string titulo){
+ 	this->titulo = titulo; 
+}; 
+ 
+void Pelicula::setGenero(string genero){
+ 	this->genero = genero; 
+}; 
+
+void Pelicula::setValoracion(int valoracion){
+ 	this->valoracion = valoracion; 
+}; 
+ 
+
+void Pelicula::setDirector(string director){
+ 	this->director = director; 
+};

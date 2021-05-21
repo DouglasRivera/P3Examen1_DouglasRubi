@@ -1,78 +1,92 @@
-#include<iostream>
-#include<vector>
-#include<string>
-#include<algorithm>
-#include <cstdlib>
-#include <ctime>
+#include "HTHPlus.h"
 
-using namespace std;
-
-
-HTHPlus::HTHPlus(){
-	
+HTHPlus::HTHPlus() {
 }
 
-HTHPlus::HTHPlus(vector<Pelicula> _pelis){
-	peliculas = _pelis;
-}
-
-void HTHPlus::agregarPelicula(Pelicula _pelicula){
-	peliculas.push_back(_pelicula);
-	cout<<"Pelicula agregada"<<endl;
-}
-
-void HTHPlus::actualizarPelicula(int index,Pelicula _peli){
-	unsigned int size = peliculas.size();
-	if(index>0){
-		index=-1;
-		peliculas[index] = _peli;
-		cout<<"Pelicula eliminada"<<endl;
-	}
-	cout<<"Pelicula no encontrada"<<endl;
-}
-
-void HTHPlus::eliminarPelicula(int index){
-	unsigned int size = peliculas.size();
-	if(index>0){
-		index-=1;
-		peliculas.erase(peliculas.begin()+index);
-		cout<<"Pelicula eliminada"<<endl;
-	}
-	cout<<"Pelicula no encontrada"<<endl;
-}
-
-void HTHPlus::imprimir(){
-	unsigned int size = peliculas.size();
-	for(unsigned int i = 0; i < size;i++){
-		cout<<(i+1)<<". "<< peliculas[i].getTitulo()<<endl;
+HTHPlus::~HTHPlus() {
+	for(int i = 0; i<Peliculas.size(); i++) {
+		delete Peliculas.at(i);
 	}
 }
 
-void HTHPlus::imprimirPorGenero(){
-	unsigned int size = peliculas.size();
-	int j = 0;
-	for(unsigned int i = 0; i < size;i++){
-		while(j < size){
-			if(peliculas[i].getGenero()==peliculas[j].getGenero()){
-				cout<<peliculas[i].getGenero()<<endl;
-				cout<<peliculas[i].getDirector()<<"-"<<peliculas[i].getGenero()<<"-"<<peliculas[i].getValoracion()<<"/5";
+vector<Pelicula*> HTHPlus::getPeliculas() {
+	return this->Peliculas;
+}
+
+void HTHPlus::agregarPeliculas(Pelicula* Peliculaa) {
+	Peliculas.push_back(Peliculaa);
+}
+
+void HTHPlus::eliminarPeliculas(int de) {
+	Peliculas.erase(begin(Peliculas)+de);
+};
+
+void HTHPlus::buscarPelicula(string Nombre) {
+	for(int i = 0; i < Peliculas.size(); i++) {
+		Pelicula* P = Peliculas.at(i);
+		string tempNombre = P->getTitulo();
+		if(tempNombre.find(Nombre) != string::npos) {
+			cout<<P->getTitulo()<<" - "<<P->getDirector()
+			<<" - "<<P->getGenero()<<" - "<<
+			P->getValoracion()<<"/5"<<endl;
+		}
+	}
+}
+
+void HTHPlus::imprimirValoracionPelicula() {
+	int c = 5;
+	for (int i=0; i<5; i++) {
+		for (int j=0; j<Peliculas.size(); j++) {
+			Pelicula* pv = Peliculas.at(j);
+			int aux = pv->getValoracion();
+			if (aux==c) {
+				cout<<pv->getTitulo()<<" - "<<
+				pv->getDirector()<<" - "<<
+				pv->getGenero()<<" - "<<
+				pv->getValoracion()<<"/5"<<endl;
 			}
-			j++;
 		}
+		c--;
 	}
 }
-void HTHPlus::buscarPelicula(string buscar){
-	unsigned int size = peliculas.size();
-	for(unsigned int i = 0; i < size;i++){
-		if(peliculas[i].getTitulo().find(buscar) != string::npos || peliculas[i].getDirector().find(buscar) != string::npos || peliculas[i].getGenero().find(buscar) != string::npos){
-			cout<<peliculas[i].getTitulo()<<"-"<<peliculas[i].getDirector()<<"-"<<peliculas[i].getGenero()<<"-"<<peliculas[i].getValoracion()<<"/5";
+
+void HTHPlus::imprimirGeneroPeliculas() {
+	bool confirm = false;
+	string genero ="";
+	vector<string> gener;
+	if(!Peliculas.empty()) {
+		for(int i = 0; i<Peliculas.size(); i++) {
+			if(!gener.empty()) {
+				for(int j = 0; j<gener.size(); j++) {
+					string Nombre = gener.at(j);
+					Pelicula* pg = Peliculas.at(i);
+					genero = pg->getGenero();
+					if(Nombre==genero) {
+						confirm = true;
+					}
+				}
+				if(!confirm) {
+					gener.push_back(genero);
+				}
+			} else {
+				Pelicula* ptemp = Peliculas.at(0);
+				string Generos = ptemp->getGenero();
+				gener.push_back(Generos);
+			}
 		}
-	}
-}
-void HTHPlus::ordenarPeliculasPorValoracion(){
-	sort(peliculas.begin(), peliculas.end(), Comparacion);
-	unsigned int size = peliculas.size();
-	for(unsigned int i = 0; i < size;i++){
-		cout<<peliculas[i].getTitulo()<<"-"<<peliculas[i].getDirector()<<"-"<<peliculas[i].getGenero()<<"-"<<peliculas[i].getValoracion()<<"/5";
+		for(int i = 0; i<gener.size(); i++) {
+			string Nombre = gener.at(i);
+			cout<<Nombre<<":"<<endl;
+			for(int j = 0; j<Peliculas.size(); j++) {
+				Pelicula* cont = Peliculas.at(j);
+				string genero = cont->getGenero();
+				if(Nombre == genero) {
+					cout<<cont->getTitulo()<<" - "<<cont->getDirector()<<" - "<<cont->getValoracion()<<"/5"<<endl;
+				}
+			}
+			cout<<endl;
+		}
+	} else {
+		cout<<"No hay ninguna pelicula en la cartelera "<<endl;
 	}
 }
