@@ -28,7 +28,7 @@ int main() {
 							getline(cin,director);
 							Pelicula* p = new Pelicula(nombre,genero,valoracion,director);
 							Plus->agregarPeliculas(p);
-							cout << "Agregado exitosamente!!"<<endl;
+							cout << "Se ha agregado la pelicula"<<endl;
 				break;
 			}
 			case 2: {
@@ -40,10 +40,10 @@ int main() {
 				if(!Plus->getPeliculas().empty()) {
 					for(int i =0; i<Plus->getPeliculas().size(); i++) {
 						Pelicula* cont = Plus->getPeliculas().at(i);
-						cout<<(i+1)<<") "<<"Titulo: "<<cont->getTitulo()<<endl;
-						cout<<"    Genero: "<<cont->getGenero()<<endl;
-						cout<<"    Director: "<<cont->getDirector()<<endl;
-						cout<<"    Valoracion: "<<cont->getValoracion()<<endl;
+						cout<<(i+1)<<") "<<"El Titulo: "<<cont->getTitulo()<<endl;
+						cout<<"    Su Genero: "<<cont->getGenero()<<endl;
+						cout<<"    Su Director: "<<cont->getDirector()<<endl;
+						cout<<"    La Valoracion: "<<cont->getValoracion()<<endl;
 						cout<<endl;
 					}
 					cout<<"Posicion a eliminar: ";
